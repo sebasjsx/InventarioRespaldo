@@ -1,0 +1,38 @@
+<body class="flex-container">
+  <h1 class="title">{{ 'LOGIN.LOGIN_TITLE' | translate }}</h1>
+
+  <div class="container">
+    <img class="img-login" src="assets/images/login2.png" alt="img login">
+    <a class="btn btn-link" routerLink="/register">{{ 'LOGIN.REGISTER_LINK' | translate }}</a>
+    <div class="input-group input-group-sm mb-3">
+      <!-- Input correo -->
+      <input type="email" class="form-control" [(ngModel)]="email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" required email
+        #emailField="ngModel">
+
+      <!-- Input contraseña -->
+      <app-input-password [(ngModel)]="password" placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}" inputId="password" required
+        #passwordField="ngModel">
+      </app-input-password>
+    </div>
+
+    <!-- Mensajes de error -->
+    <div *ngIf="(emailField.invalid && emailField.touched) || (passwordField.invalid && passwordField.touched)"
+      class="error-container">
+      <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+        <span *ngIf="emailField.errors?.['required']">{{ 'LOGIN.EMAIL_REQUIRED' | translate }}</span>
+        <span *ngIf="emailField.errors?.['email']">{{ 'LOGIN.INVALID_EMAIL_FORMAT' | translate }}</span>
+      </div>
+
+      <div *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+        <span *ngIf="passwordField.errors?.['required']">{{ 'LOGIN.PASSWORD_REQUIRED' | translate }}</span>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" [disabled]="emailField.invalid || passwordField.invalid"
+      (click)="login()">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
+
+    <hr class="hr-custom">
+
+    <a class="btn btn-link" routerLink="/forgetPassword">{{ 'LOGIN.FORGOT_PASSWORD_LINK' | translate }}</a>
+  </div>
+</body>

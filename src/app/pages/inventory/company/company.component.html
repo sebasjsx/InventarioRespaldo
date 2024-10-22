@@ -1,0 +1,104 @@
+<body class="flex-container">
+    <app-sidebar></app-sidebar>
+    <h1 class="title">{{ 'COMPANY.TITLE' | translate }}</h1>
+    <div class="container">
+        <!-- Sección de la izquierda -->
+        <div class="left-section">
+            <div class="input-group mb-3 search-container">
+                <input type="text" class="form-control" [(ngModel)]="inputSearch"
+                    placeholder="{{ 'COMPANY.SEARCH_PLACEHOLDER' | translate }}" aria-label="Buscar">
+
+                <!-- Boton de clean -->
+                <button class="clear-btn" type="button" *ngIf="inputSearch" (click)="clearSearch()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <!-- Boton de search -->
+                <button class="btn btn-outline-secondary search-btn" type="button" (click)="searchCompany()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+
+            <!-- Lista de la izquierda -->
+            <app-list-table [totalSize]="totalCompanies" [dataType]="'company'" [companyService]="companyService"
+                [columns]="companyColumns" [data]="companyData" (itemSelected)="onItemSelected($event)"
+                (pageChange)="onPageChange($event)">
+            </app-list-table>
+        </div>
+
+        <!-- Sección de la derecha -->
+        <div class="right-section">
+            <h1 class="form-title"> {{ (isEditing ? 'COMPANY.UPDATE_BUTTON' : 'COMPANY.SAVE_BUTTON') | translate }}
+            </h1>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">{{ 'COMPANY.NAME' | translate }} *</label>
+                    <input type="text" id="name" class="form-control" placeholder="{{ 'COMPANY.NAME' | translate }}"
+                        [(ngModel)]="name" required #nameField="ngModel">
+
+                    <!-- Mensaje de error para nombre -->
+                    <div *ngIf="nameField.invalid && nameField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="nameField.errors?.['required']">{{ 'COMPANY.REQUIRED_NAME' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">{{ 'COMPANY.DESCRIPTION' | translate }} *</label>
+                    <input type="text" id="description" class="form-control"
+                        placeholder="{{ 'COMPANY.DESCRIPTION' | translate }}" [(ngModel)]="description" required
+                        #descriptionField="ngModel">
+
+                    <!-- Mensaje de error para descripción -->
+                    <div *ngIf="descriptionField.invalid && descriptionField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="descriptionField.errors?.['required']">{{ 'COMPANY.REQUIRED_DESCRIPTION' |
+                                translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="adress">{{ 'COMPANY.ADRESS' | translate }} *</label>
+                    <input type="text" id="adress" class="form-control" placeholder="{{ 'COMPANY.ADRESS' | translate }}"
+                        [(ngModel)]="address" required #adressField="ngModel">
+
+                    <!-- Mensaje de error para dirección -->
+                    <div *ngIf="adressField.invalid && adressField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="adressField.errors?.['required']">{{ 'COMPANY.REQUIRED_ADRESS' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">{{ 'COMPANY.PHONE' | translate }} *</label>
+                    <input type="text" id="phone" class="form-control" placeholder="{{ 'COMPANY.PHONE' | translate }}"
+                        [(ngModel)]="phone" required #phoneField="ngModel">
+
+                    <!-- Mensaje de error para teléfono -->
+                    <div *ngIf="phoneField.invalid && phoneField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="phoneField.errors?.['required']">{{ 'COMPANY.REQUIRED_PHONE' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">{{ 'COMPANY.STATUS' | translate }}</label>
+                    <mat-slide-toggle [(ngModel)]="status" id="status" name="status">
+                        {{ status ? ('COMPANY.ACTIVE' | translate) : ('COMPANY.INACTIVE' | translate) }}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn-submit" (click)="createOrUpdateCompany()">
+                    {{ (isEditing ? 'COMPANY.UPDATE_BUTTON' : 'COMPANY.SAVE_BUTTON') | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</body>

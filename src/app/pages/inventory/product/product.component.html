@@ -1,0 +1,159 @@
+<body class="flex-container">
+    <app-sidebar></app-sidebar>
+    <h1 class="title">{{ 'PRODUCT.TITLE' | translate }}</h1>
+    <div class="container">
+        <!-- Sección de la izquierda -->
+        <div class="left-section">
+            <div class="input-group mb-3 search-container">
+                <input type="text" class="form-control" [(ngModel)]="inputSearch"
+                    placeholder="{{ 'PRODUCT.SEARCH_PLACEHOLDER' | translate }}" aria-label="Buscar">
+
+                <!-- Boton de clean -->
+                <button class="clear-btn" type="button" *ngIf="inputSearch" (click)="clearSearch()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+                <!-- Boton de search -->
+                <button class="btn btn-outline-secondary search-btn" type="button" (click)="searchProducts()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+
+            <!-- Lista de la izquierda -->
+            <app-list-table [totalSize]="totalProducts" [dataType]="'products'" [productService]="productsService"
+                [columns]="productColumns" [data]="productsData" (itemSelected)="onItemSelected($event)"
+                (pageChange)="onPageChange($event)">
+            </app-list-table>
+        </div>
+
+        <!-- Sección de la derecha -->
+        <div class="right-section">
+            <h1 class="form-title"> {{ (isEditing ? 'PRODUCT.UPDATE_BUTTON' : 'PRODUCT.SAVE_BUTTON') | translate }}
+            </h1>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">{{ 'PRODUCT.NAME' | translate }} *</label>
+                    <input type="text" id="name" class="form-control" placeholder="{{ 'PRODUCT.NAME' | translate }}"
+                        [(ngModel)]="name" required #nameField="ngModel">
+
+                    <!-- Mensaje de error para nombre -->
+                    <div *ngIf="nameField.invalid && nameField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="nameField.errors?.['required']">{{ 'PRODUCT.REQUIRED_NAME' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deliveryTime">{{ 'PRODUCT.DELIVERY_TIME' | translate }} *</label>
+                    <input type="number" id="deliveryTime" class="form-control"
+                        placeholder="{{ 'PRODUCT.DELIVERY_TIME' | translate }}" [(ngModel)]="deliveryTime" required
+                        #deliveryTimeField="ngModel">
+
+                    <!-- Mensaje de error para tiempo de entrega -->
+                    <div *ngIf="deliveryTimeField.invalid && deliveryTimeField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="deliveryTimeField.errors?.['required']">{{ 'PRODUCT.REQUIRED_DELIVERY_TIME' |
+                                translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="barCode">{{ 'PRODUCT.BARCODE' | translate }} *</label>
+                    <input type="text" id="barCode" class="form-control"
+                        placeholder="{{ 'PRODUCT.BARCODE' | translate }}" [(ngModel)]="barCode" required
+                        #barCodeField="ngModel">
+
+                    <!-- Mensaje de error para código de barras -->
+                    <div *ngIf="barCodeField.invalid && barCodeField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="barCodeField.errors?.['required']">{{ 'PRODUCT.REQUIRED_BARCODE' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">{{ 'PRODUCT.DESCRIPTION' | translate }} *</label>
+                    <input type="text" id="description" class="form-control"
+                        placeholder="{{ 'PRODUCT.DESCRIPTION' | translate }}" [(ngModel)]="description" required
+                        #descriptionField="ngModel">
+
+                    <!-- Mensaje de error para descripción -->
+                    <div *ngIf="descriptionField.invalid && descriptionField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="descriptionField.errors?.['required']">{{ 'PRODUCT.REQUIRED_DESCRIPTION' |
+                                translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="availableQuantity">{{ 'PRODUCT.AVAILABLE_QUANTITY' | translate }} *</label>
+                    <input type="number" id="availableQuantity" class="form-control"
+                        placeholder="{{ 'PRODUCT.AVAILABLE_QUANTITY' | translate }}" [(ngModel)]="availableQuantity"
+                        required #availableQuantityField="ngModel">
+
+                    <!-- Mensaje de error para cantidad disponible -->
+                    <div *ngIf="availableQuantityField.invalid && availableQuantityField.touched"
+                        class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="availableQuantityField.errors?.['required']">{{
+                                'PRODUCT.REQUIRED_AVAILABLE_QUANTITY' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">{{ 'PRODUCT.PRICE' | translate }} *</label>
+                    <input type="number" id="price" class="form-control" placeholder="{{ 'PRODUCT.PRICE' | translate }}"
+                        [(ngModel)]="price" required #priceField="ngModel">
+
+                    <!-- Mensaje de error para precio -->
+                    <div *ngIf="priceField.invalid && priceField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="priceField.errors?.['required']">{{ 'PRODUCT.REQUIRED_PRICE' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyId">{{ 'PRODUCT.COMPANY' | translate }} *</label>
+                    <select id="companyId" class="form-select" [(ngModel)]="selectedCompanyId" required>
+                        <option [value]="null" disabled selected>{{ 'PRODUCT.SELECT_COMPANY' | translate }}</option>
+                        <option *ngFor="let company of companiesData" [value]="company.companyId">
+                            {{ company.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryId">{{ 'PRODUCT.CATEGORY' | translate }} *</label>
+                    <select id="categoryId" class="form-select" [(ngModel)]="selectedCategoryId" required>
+                        <option [value]="null" disabled selected>{{ 'PRODUCT.SELECT_CATEGORY' | translate }}</option>
+                        <option *ngFor="let category of categoriesData" [value]="category.categoryId">
+                            {{ category.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">{{ 'PRODUCT.STATUS' | translate }}</label>
+                    <mat-slide-toggle [(ngModel)]="status" id="status" name="status">
+                        {{ status ? ('PRODUCT.ACTIVE' | translate) : ('PRODUCT.INACTIVE' | translate) }}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn-submit" (click)="createOrUpdateProduct()">
+                    {{ (isEditing ? 'PRODUCT.UPDATE_BUTTON' : 'PRODUCT.SAVE_BUTTON') | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</body>

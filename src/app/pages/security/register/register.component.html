@@ -1,0 +1,57 @@
+<body class="flex-container">
+    <h1 class="title">Registro</h1>
+    <div class="container">
+      <img class="img-register" src="assets/images/registerImg.png" alt="img register">
+      
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+        <div class="input-group input-group-sm mb-3">
+          <input type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="Nombre" required #nameField="ngModel">
+          
+          <input type="text" class="form-control" [(ngModel)]="surname" name="surname" placeholder="Apellido" required #surnameField="ngModel">
+          
+          <input type="text" class="form-control" [(ngModel)]="username" name="username" placeholder="Nombre de usuario" required #usernameField="ngModel">
+          
+          <input type="number" class="form-control" [(ngModel)]="age" name="age" placeholder="Edad" min="18" required #ageField="ngModel">
+          
+          <input type="text" class="form-control" [(ngModel)]="phone" name="phone" placeholder="Teléfono" required pattern="^[0-9]{8}$" #phoneField="ngModel">
+          
+          <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="example@gmail.com" required email #emailField="ngModel">
+        </div>
+        
+
+        <div *ngIf="registerForm.invalid && registerForm.touched" class="error-container">
+          <div *ngIf="nameField.invalid && nameField.touched" class="error-message">
+            <span *ngIf="nameField.errors?.['required']">El nombre es obligatorio.</span>
+          </div>
+          <div *ngIf="surnameField.invalid && surnameField.touched" class="error-message">
+            <span *ngIf="surnameField.errors?.['required']">El apellido es obligatorio.</span>
+          </div>
+          <div *ngIf="usernameField.invalid && usernameField.touched" class="error-message">
+            <span *ngIf="usernameField.errors?.['required']">El nombre de usuario es obligatorio.</span>
+          </div>
+          <div *ngIf="ageField.invalid && ageField.touched" class="error-message">
+            <span *ngIf="ageField.errors?.['required']">La edad es obligatoria.</span>
+            <span *ngIf="ageField.errors?.['min']">Debe tener al menos 18 años.</span>
+          </div>
+          <div *ngIf="phoneField.invalid && phoneField.touched" class="error-message">
+            <span *ngIf="phoneField.errors?.['required']">El teléfono es obligatorio.</span>
+            <span *ngIf="phoneField.errors?.['pattern']">El teléfono debe tener 8 dígitos.</span>
+          </div>
+          <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+            <span *ngIf="emailField.errors?.['required']">El correo es obligatorio.</span>
+            <span *ngIf="emailField.errors?.['email']">El formato del correo es inválido.</span>
+          </div>
+        </div>
+  
+        <div class="error-container">
+          <div *ngIf="errorMessage" class="error-message">
+            <span>{{ errorMessage }}</span>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrar</button>
+      </form>
+
+      <a class="btn btn-link" routerLink="/login">¿Ya tienes una cuenta? Haz clic aquí para iniciar sesión</a>
+    </div>
+  </body>

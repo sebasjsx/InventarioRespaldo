@@ -1,0 +1,109 @@
+@import '/src/styles.scss';
+
+mat-list {
+    background-color: $secondary-color;
+    border-radius: 4px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+    cursor: pointer;
+    transition: background-color 0.3s; 
+
+    &:hover {
+        background-color: $primary-color;
+        border-radius: 15px; 
+    }
+
+    .mat-list-text {
+        display: flex;
+        justify-content: space-between;  
+        width: 100%;  
+        align-items: center;
+
+        .items {
+            display: flex;
+            flex-direction: column; 
+            flex-grow: 1;
+            font-size: 0.8em;
+            justify-content: space-between; 
+        }
+    }
+}
+
+.mat-list-item {
+    padding: 0;
+    margin: 0 16px;
+}
+
+.column {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+
+    &.email, &.datePurchase, &.totalPurchase {
+        color: #757575; 
+        font-size: 0.7em; 
+    }
+}
+
+.state-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: center;
+    margin-right: 10px;
+
+    &.active {
+        background-color: $state-color-active; 
+    }
+
+    &.inactive {
+        background-color: $state-color-inactive; 
+    }
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+
+    .btn {
+        margin-left: 8px;
+        margin-bottom: 8px;
+
+        &:disabled {
+            background-color: rgba(128, 128, 128, 0.1); 
+            color: gray;
+            cursor: not-allowed;
+            border: none;
+            opacity: 0.4;
+        }
+    }
+
+    .btn-edit {
+        border: none;
+        background-color: $primary-color;
+
+        &:hover {
+            background-color: $blue-color;
+            color: $white;
+        }
+    }
+
+    .btn-delete {
+        border: none;
+        background-color: $primary-color;
+
+        &:hover {
+            background-color: $blue-color;
+            color: $white;
+        }
+    }
+}
+
+.selected {
+    background-color: $primary-color;
+    border-radius: 15px;   
+}

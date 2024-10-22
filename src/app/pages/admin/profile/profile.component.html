@@ -1,0 +1,84 @@
+<body class="flex-container">
+    <app-sidebar></app-sidebar>
+    <h1 class="title">{{ 'PROFILES.TITLE' | translate }}</h1>
+    <div class="container">
+        <!-- Seccion de la izquierda -->
+        <div class="left-section">
+
+            <div class="input-group mb-3 search-container">
+                <input type="text" class="form-control" [(ngModel)]="inputSearch"
+                    placeholder="{{ 'PROFILES.SEARCH_PLACEHOLDER' | translate }}" aria-label="Buscar">
+                <!-- Boton de clean -->
+                <button class="clear-btn" type="button" *ngIf="inputSearch" (click)="clearSearch()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <!-- Boton de search -->
+                <button class="btn btn-outline-secondary search-btn" type="button" (click)="searchProfile()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+
+            <!-- Lista de la izquierda -->
+            <app-list-table [totalSize]="totalProfiles" [dataType]="'profiles'" [profileService]="profilesService"
+                [columns]="profileColumns" [data]="profilesData" (itemSelected)="onItemSelected($event)"
+                (pageChange)="onPageChange($event)">
+            </app-list-table>
+        </div>
+
+        <!-- Seccion de la derecha -->
+        <div class="right-section">
+            <h1 class="form-title"> {{ (isEditing ? 'PROFILES.UPDATE_BUTTON' : 'PROFILES.SAVE_BUTTON') | translate }}
+            </h1>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">{{ 'PROFILES.NAME' | translate }} *</label>
+                    <input type="text" id="name" class="form-control" placeholder="{{ 'PROFILES.NAME' | translate }}"
+                        [(ngModel)]="name" required #nameField="ngModel">
+
+                    <!-- Mensaje de error para nombre -->
+                    <div *ngIf="nameField.invalid && nameField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="nameField.errors?.['required']">{{ 'PROFILES.REQUIRED_NAME' | translate
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">{{ 'PROFILES.DESCRIPTION' | translate }} *</label>
+                    <input type="text" id="description" class="form-control"
+                        placeholder="{{ 'PROFILES.DESCRIPTION' | translate }}" [(ngModel)]="description" required
+                        #descriptionField="ngModel">
+
+                    <!-- Mensaje de error para descripcion -->
+                    <div *ngIf="descriptionField.invalid && descriptionField.touched" class="error-container">
+                        <div class="error-message">
+                            <span *ngIf="descriptionField.errors?.['required']">{{ 'PROFILES.REQUIRED_DESCRIPTION' |
+                                translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de roles -->
+            <div class="form-group">
+                <label for="roles">{{ 'PROFILES.ASSIGN_ROLES' | translate }} *</label>
+                <mat-selection-list #rolesList [(ngModel)]="selectedRoles">
+                    <mat-list-option *ngFor="let role of roles" [value]="role">
+                        <span>{{ getRoleDescription(role) }}</span>
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+
+            <!-- Conteo de roles -->
+            <p>{{ 'PROFILES.SELECTED_ROLES' | translate }}: {{ rolesList.selectedOptions.selected.length }}</p>
+
+            <div class="button-container">
+                <button class="btn-submit" (click)="createOrUpdateProfile()">
+                    {{ (isEditing ? 'PROFILES.UPDATE_BUTTON' : 'PROFILES.SAVE_BUTTON') | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</body>

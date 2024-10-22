@@ -1,0 +1,139 @@
+<body class="flex-container">
+  <app-sidebar></app-sidebar>
+  <h1 class="title">{{ 'USER.TITLE' | translate }}</h1>
+  <div class="container">
+    <!-- Sección de la izquierda -->
+    <div class="left-section">
+
+      <div class="input-group mb-3 search-container">
+        <input type="text" class="form-control" [(ngModel)]="inputSearch"
+          placeholder="{{ 'USER.SEARCH_PLACEHOLDER' | translate }}" aria-label="Buscar">
+        <!-- Boton de clean -->
+        <button class="clear-btn" type="button" *ngIf="inputSearch" (click)="clearSearch()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <!-- Boton de search -->
+        <button class="btn btn-outline-secondary search-btn" type="button" (click)="searchUsers()">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+      <!-- Lista de la izquierda -->
+      <app-list-table [totalSize]="totalUsers" [dataType]="'users'" [userService]="userService" [columns]="userColumns"
+        [data]="usersData" (itemSelected)="onUserSelected($event)" (pageChange)="onPageChange($event)">
+      </app-list-table>
+    </div>
+
+    <!-- Sección de la derecha -->
+    <div class="right-section">
+      <h1 class="form-title"> {{ isEditing ? ('USER.UPDATE_BUTTON' | translate) : ('USER.SAVE_BUTTON' | translate) }}
+      </h1>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address">{{ 'USER.EMAIL' | translate }} *</label>
+          <input type="text" id="email" class="form-control" placeholder="{{ 'USER.EMAIL' | translate }}"
+            [(ngModel)]="email" required #emailField="ngModel" [disabled]="isEditing">
+
+          <!-- Mensaje de error para email -->
+          <div *ngIf="emailField.invalid && emailField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="emailField.errors?.['required']">{{ 'USER.REQUIRED_EMAIL' | translate}}</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">{{ 'USER.NAME' | translate }} *</label>
+          <input type="text" id="name" class="form-control" placeholder="{{ 'USER.NAME' | translate }}"
+            [(ngModel)]="name" required #nameField="ngModel">
+
+          <!-- Mensaje de error para nombre -->
+          <div *ngIf="nameField.invalid && nameField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="nameField.errors?.['required']">{{ 'USER.REQUIRED_NAME' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="surname">{{ 'USER.SURNAME' | translate }} *</label>
+          <input type="text" id="surname" class="form-control" placeholder="{{ 'USER.SURNAME' | translate }}"
+            [(ngModel)]="surname" required #surnameField="ngModel">
+
+          <!-- Mensaje de error para el apellido -->
+          <div *ngIf="surnameField.invalid && surnameField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="surnameField.errors?.['required']">{{ 'USER.REQUIRED_SURNAME' |
+                translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">{{ 'USER.USERNAME' | translate }} *</label>
+          <input type="text" id="username" class="form-control" placeholder="{{ 'USER.USERNAME' | translate }}"
+            [(ngModel)]="username" required #usernameField="ngModel">
+
+          <!-- Mensaje de error para nombre de usuario -->
+          <div *ngIf="usernameField.invalid && usernameField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="usernameField.errors?.['required']">{{
+                'USER.REQUIRED_USERNAME' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">{{ 'USER.AGE' | translate }} *</label>
+          <input type="number" id="age" class="form-control" placeholder="{{ 'USER.AGE' | translate }}"
+            [(ngModel)]="age" required #ageField="ngModel">
+
+          <!-- Mensaje de error para edad -->
+          <div *ngIf="ageField.invalid && ageField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="ageField.errors?.['required']">{{ 'USER.REQUIRED_AGE' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">{{ 'USER.PHONE' | translate }} *</label>
+          <input type="text" id="phone" class="form-control" placeholder="{{ 'USER.PHONE' | translate }}"
+            [(ngModel)]="phone" required #phoneField="ngModel" maxlength="8" pattern="[0-9]{8}">
+        
+          <!-- Mensaje de error para teléfono -->
+          <div *ngIf="phoneField.invalid && phoneField.touched" class="error-container">
+            <div class="error-message">
+              <span *ngIf="phoneField.errors?.['required']">{{ 'USER.REQUIRED_PHONE' | translate }}</span>
+              <span *ngIf="phoneField.errors?.['pattern']">{{ 'USER.INVALID_PHONE' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="user">{{ 'USER.PROFILE' | translate }} *</label>
+          <select id="userId" class="form-select" [(ngModel)]="selectedProfileId" required>
+            <option value="null" disabled selected>{{ 'USER.PROFILE' | translate }}</option>
+            <option *ngFor="let profile of profilesData" [value]="profile.profileId">
+              {{ profile.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="status">{{ 'USER.STATUS' | translate }}</label>
+          <mat-slide-toggle [(ngModel)]="status" id="status" name="status">
+            {{ status ? ('USER.ACTIVE' | translate) : ('USER.INACTIVE' | translate) }}
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="btn-submit" (click)="createOrUpdateUser()">
+          {{ (isEditing ? 'USER.UPDATE_BUTTON' : 'USER.SAVE_BUTTON') | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</body>

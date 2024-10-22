@@ -1,0 +1,30 @@
+<mat-list>
+    <div class="action-buttons">
+        <button class="btn btn-delete" (click)="deleteItem()" [disabled]="!selectedItem">
+            <i class="bi bi-trash"></i> <!-- Icono papelera -->
+        </button>
+    </div>
+    <mat-list-item *ngFor="let row of paginatedData" class="list-item" (click)="selectItem(row)" [ngClass]="{'selected': selectedItem === row}">
+        <div class="mat-list-text">
+            <div class="state-indicator" [ngClass]="{'active': row.status, 'inactive': !row.status}"></div>
+            <div class="items">
+                <div class="column" *ngIf="dataType === 'users'">{{ row.username }}</div>
+                <div class="column email" *ngIf="dataType === 'users'">{{ row.email }}</div>
+                <div class="column" *ngIf="dataType === 'profiles'">{{ row.name }}</div>
+                <div class="column" *ngIf="dataType === 'categories'">{{ row.name }}</div>
+                <div class="column" *ngIf="dataType === 'company'">{{row.name}}</div>
+                <div class="column" *ngIf="dataType === 'wineries'">{{row.name}}</div>
+                <div class="column" *ngIf="dataType === 'products'">{{row.name}}</div>
+                <div class="column wineryName" *ngIf="dataType === 'purchase'">{{row.wineryName}}</div>
+                <div class="column datePurchase" *ngIf="dataType === 'purchase'">{{row.datePurchase}}</div>
+            </div>
+        </div>
+    </mat-list-item>
+  </mat-list>
+  <mat-paginator
+    [length]="totalSize"
+    [pageSize]="pageSize"
+    [hidePageSize]="true"
+    (page)="handlePageEvent($event)">
+  </mat-paginator>
+  

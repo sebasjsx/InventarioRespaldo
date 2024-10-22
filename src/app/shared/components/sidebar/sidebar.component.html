@@ -1,0 +1,84 @@
+<div class="sidebar">
+  <ul>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home']" matTooltip="{{ 'SIDEBAR.HOME_DESCRIPTION' | translate }}">
+        <mat-icon>home</mat-icon>
+        <span>{{ 'SIDEBAR.HOME' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/users']" matTooltip="{{ 'SIDEBAR.USERS_DESCRIPTION' | translate }}">
+        <mat-icon>group</mat-icon>
+        <span>{{ 'SIDEBAR.USERS' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/profiles']"
+        matTooltip="{{ 'SIDEBAR.PROFILES_DESCRIPTION' | translate }}">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ 'SIDEBAR.PROFILES' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/auditory']"
+        matTooltip="{{ 'SIDEBAR.AUDIT_DESCRIPTION' | translate }}">
+        <mat-icon>assessment</mat-icon>
+        <span>{{ 'SIDEBAR.AUDIT' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/wineries']"
+        matTooltip="{{ 'SIDEBAR.WINERIES_DESCRIPTION' | translate }}">
+        <mat-icon>warehouse</mat-icon>
+        <span>{{ 'SIDEBAR.WINERIES' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/companies']"
+        matTooltip="{{ 'SIDEBAR.COMPANY_DESCRIPTION' | translate }}">
+        <mat-icon>business</mat-icon>
+        <span>{{ 'SIDEBAR.COMPANY' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/categories']"
+        matTooltip="{{ 'SIDEBAR.CATEGORIES_DESCRIPTION' | translate }}">
+        <mat-icon>category</mat-icon>
+        <span>{{ 'SIDEBAR.CATEGORIES' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/products']"
+        matTooltip="{{ 'SIDEBAR.PRODUCTS_DESCRIPTION' | translate }}">
+        <mat-icon>store</mat-icon>
+        <span>{{ 'SIDEBAR.PRODUCTS' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/home/purchase']"
+        matTooltip="{{ 'SIDEBAR.PURCHASES_DESCRIPTION' | translate }}">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>{{ 'SIDEBAR.PURCHASES' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" matTooltip="{{ 'SIDEBAR.MOVEMENTS_DESCRIPTION' | translate }}">
+        <mat-icon>swap_vert</mat-icon>
+        <span>{{ 'SIDEBAR.MOVEMENTS' | translate }}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-link" [routerLink]="['/changePassword']"
+        matTooltip="{{ 'SIDEBAR.CHANGE_PASSWORD_DESCRIPTION' | translate }}">
+        <mat-icon>lock_reset</mat-icon>
+        <span>{{ 'SIDEBAR.CHANGE_PASSWORD' | translate }}</span>
+      </a>
+    </li>
+    <li class="logout-item">
+      <a class="btn btn-link" (click)="logout()" matTooltip="{{ 'SIDEBAR.LOGOUT_DESCRIPTION' | translate }}">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>{{ 'SIDEBAR.LOGOUT' | translate }}</span>
+      </a>
+    </li>
+  </ul>
+</div>

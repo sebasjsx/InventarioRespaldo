@@ -1,0 +1,100 @@
+<body class="flex-container">
+    <app-sidebar></app-sidebar>
+
+    <h1 class="title">{{ 'AUDIT.TITLE' | translate }}</h1>
+
+    <div class="container">
+        <div class="audit-container">
+            <div class="filter-section">
+
+                <mat-form-field>
+                    <mat-label>{{ 'AUDIT.DATE_RANGE' | translate }}</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="{{ 'AUDIT.START_DATE' | translate }}" [(ngModel)]="startDate">
+                        <input matEndDate placeholder="{{ 'AUDIT.END_DATE' | translate }}" [(ngModel)]="endDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'AUDIT.ENTITY' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="selectedEntity">
+                        <mat-option value="">{{ 'AUDIT.SELECT_ENTITY' | translate }}</mat-option>
+                        <mat-option value="signup">{{ 'AUDIT.ENTITY_SIGNUP' | translate }}</mat-option>
+                        <mat-option value="user">{{ 'AUDIT.ENTITY_USER' | translate }}</mat-option>
+                        <mat-option value="Company">{{ 'AUDIT.ENTITY_COMPANY' | translate }}</mat-option>
+                        <mat-option value="Product">{{ 'AUDIT.ENTITY_PRODUCT' | translate }}</mat-option>
+                        <mat-option value="Winery">{{ 'AUDIT.ENTITY_WINERY' | translate }}</mat-option>
+                        <mat-option value="Category">{{ 'AUDIT.ENTITY_CATEGORY' | translate }}</mat-option>
+                        <mat-option value="purchase">{{ 'AUDIT.ENTITY_PURCHASE' | translate }}</mat-option>
+                        <mat-option value="Profile">{{ 'AUDIT.ENTITY_PROFILE' | translate }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'AUDIT.OPERATION' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="selectedOperation">
+                        <mat-option value="">{{ 'AUDIT.SELECT_OPERATION' | translate }}</mat-option>
+                        <mat-option value="POST">POST</mat-option>
+                        <mat-option value="PUT">PUT</mat-option>
+                        <mat-option value="GET">GET</mat-option>
+                        <mat-option value="DELETE">DELETE</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'AUDIT.USER' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="selectedUser">
+                        <mat-option value="">{{ 'AUDIT.SELECT_USER' | translate }}</mat-option>
+                        <mat-option *ngFor="let user of usersData" [value]="user.username">
+                            {{ user.username }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-icon-button (click)="applyFilters()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.ID' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="entity">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.ENTITY' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.entity }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="username">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.USERNAME' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.username }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="operation">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.OPERATION' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.operation }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="httpStatusCode">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.STATUS' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.httpStatusCode }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="dateTime">
+                    <mat-header-cell *matHeaderCellDef>{{ 'AUDIT.DATE' | translate }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.dateTime }} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <mat-paginator [length]="totalElements" [pageSize]="pageSize" (page)="handlePageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</body>

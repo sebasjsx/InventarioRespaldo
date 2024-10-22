@@ -1,0 +1,94 @@
+@import '/src/styles.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: $bg-obscure; 
+    position: relative;
+  
+    .title {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      color: $white;
+    }
+  
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px; 
+  
+      .img-register {
+        max-width: 150px; 
+        margin-bottom: 20px;
+        mask-image: linear-gradient(#000000 50%, transparent);
+      }
+  
+      .input-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 20px; 
+        width: 100%; 
+  
+        input {
+          width: 100%;
+          padding: 12px;
+          border-radius: 5px;
+          font-size: 1rem;
+        }
+      }
+  
+      .btn-primary {
+        margin-top: 20px;
+        width: 100%; // Botón que ocupa todo el ancho
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+  
+      .btn-link {
+        color: $white;
+        text-decoration: none;
+        font-size: 0.8em;
+
+        &:hover {
+            color: gray;
+        }
+      }
+  
+      .error-container {
+        border-radius: 5px;
+        width: 100%;
+
+            .error-message {
+            margin: 0;
+            padding: 0;
+            color: $error-color-msj;
+            font-size: 0.7rem;
+            text-align: center;
+            }
+        }
+    }
+  }

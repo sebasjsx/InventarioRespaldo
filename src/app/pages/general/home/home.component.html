@@ -1,0 +1,62 @@
+<div class="bg-color flex flex-col min-h-screen">
+    <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
+    <nav class="text-white p-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">{{ 'HOME.TITLE' | translate }}</h1>
+            <div class="space-x-4 flex items-center">
+                <!-- Mostrar botones según el estado de inicio de sesión -->
+                <ng-container *ngIf="!isLoggedIn">
+                    <a [routerLink]="['/login']"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        {{ 'HOME.LOGIN' | translate }}
+                    </a>
+                    <a [routerLink]="['/register']"
+                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path
+                                d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                        </svg>
+                        {{ 'HOME.REGISTER' | translate }}
+                    </a>
+                </ng-container>
+
+
+                <div class="flex items-center space-x-2">
+                    <mat-slide-toggle (change)="toggleLanguage($event)" [checked]="currentLanguage === 'es'">
+                        <span class="sr-only">{{ currentLanguage === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'
+                            }}</span>
+                    </mat-slide-toggle>
+                    <img [src]="currentLanguage === 'en' ? 'assets/images/us-flag.png' : 'assets/images/es-flag.png'"
+                        [alt]="currentLanguage === 'en' ? 'English flag' : 'Bandera de España'"
+                        class="w-6 h-4 object-contain" />
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 flex items-center">
+        <div class="flex flex-col md:flex-row items-center justify-between w-full">
+            <div class="md:w-1/2 mb-4 md:mb-0">
+                <h2 class="text-3xl font-bold mb-4 text-white">{{ 'HOME.WELCOME' | translate }}</h2>
+                <p class="text-white">{{ 'HOME.DESCRIPTION' | translate }}</p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="assets/images/inventario1.png" alt="Imagen de Inventario"
+                    class="w-full max-w-md h-auto rounded-lg" />
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-4">
+        <div class="container mx-auto text-center text-white">
+            <p>{{ 'HOME.COPYRIGHT' | translate }}</p>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ 'DIALOG_DELETE.TITLE' | translate }}</h2>
+<mat-dialog-content>
+  {{ 'DIALOG_DELETE.MESSAGE' | translate }} 
+  {{ itemType === 'categories' ? 'categoría' : itemType === 'users' ? 'usuario' : 'perfil' }} 
+  "{{ itemType === 'categories' ? data.item.name : itemType === 'users' ? data.item.username : data.item.name }}"
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">{{ 'DIALOG_DELETE.CANCEL' | translate }}</button>
+  <button mat-button color="warn" (click)="confirmDelete()">{{ 'DIALOG_DELETE.DELETE' | translate }}</button>
+</mat-dialog-actions>
